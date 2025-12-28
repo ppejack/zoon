@@ -2,7 +2,7 @@
 
 A Rust implementation of [ZOON (Zero Overhead Object Notation)](https://github.com/zoon-format/zoon/blob/main/SPEC.md) - the most token-efficient data format for LLMs.
 
-[![Crates.io](https://img.shields.io/crates/v/zoon-rust)](https://crates.io/crates/zoon-rust)
+[![Crates.io](https://img.shields.io/crates/v/zoon-format)](https://crates.io/crates/zoon-format)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 ## Installation
