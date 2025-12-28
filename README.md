@@ -43,13 +43,13 @@ LLM Context Tokens cost money. Standard JSON is verbose. ZOON is **optimal**.
 ## Installation
 
 ```bash
-bun install @zoon-format/zoon
+bun add @zoon-format/zoon
 ```
 
 ### CLI
 
 ```bash
-bun install -g @zoon-format/cli
+npm install -g @zoon-format/cli
 zoon input.json -o output.zoon --stats
 ```
 
@@ -143,8 +143,8 @@ zoon data.json --stats
 | `@zoon-format/zoon` | Core encode/decode library | [npm](https://npmjs.com/package/@zoon-format/zoon) |
 | `@zoon-format/cli`  | Command-line interface     | [npm](https://npmjs.com/package/@zoon-format/cli)  |
 | `zoon-format`       | Python bindings            | [PyPI](https://pypi.org/project/zoon-format/)      |
-| `zoon-go`           | Go bindings                | [GitHub](https://github.com/zoon-format/zoon-go)   |
-| `zoon-rust`         | Rust bindings              | [crates.io](https://crates.io/crates/zoon-rust)    |
+| `zoon-go`           | Go module                  | [GitHub](https://github.com/zoon-format/zoon-go)   |
+| `zoon-format`       | Rust Crate                 | [crates.io](https://crates.io/crates/zoon-format)  |
 
 ## Links
 
