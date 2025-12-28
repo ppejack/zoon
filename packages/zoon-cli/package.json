@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "author": "Carsen Klock",
-  "description": "Command-line interface for zoon (Zero Object Notation) format",
+  "description": "Command-line interface for zoon (Zero Overhead Object Notation) format",
   "main": "src/index.ts",
   "bin": {
     "zoon": "src/index.ts"
