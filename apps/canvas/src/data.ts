@@ -40,17 +40,6 @@ export const PRESETS: Record<string, string> = {
         country: ["US", "UK", "DE", "FR", "JP"][i % 5],
         timestamp: `2025-01-${String((i % 28) + 1).padStart(2, '0')}T${String(i % 24).padStart(2, '0')}:00:00Z`,
     })), null, 2),
-    "API Response (50 rows)": JSON.stringify(Array.from({ length: 50 }, (_, i) => ({
-        id: `req_${String(i + 1).padStart(4, '0')}`,
-        endpoint: ["/api/users", "/api/products", "/api/orders", "/api/inventory", "/api/analytics"][i % 5],
-        method: ["GET", "POST", "PUT", "DELETE"][i % 4],
-        statusCode: [200, 201, 400, 401, 404, 500][i % 6],
-        responseTimeMs: Math.floor(Math.random() * 500) + 10,
-        userId: i % 3 === 0 ? null : `user_${Math.floor(Math.random() * 1000)}`,
-        cached: i % 4 === 0,
-        region: ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"][i % 4],
-        timestamp: `2025-01-15T${String(Math.floor(i / 2)).padStart(2, '0')}:${String((i * 3) % 60).padStart(2, '0')}:00Z`,
-    })), null, 2),
     "Chat Messages (40 rows)": JSON.stringify(Array.from({ length: 40 }, (_, i) => ({
         messageId: i + 1,
         conversationId: `conv_${Math.floor(i / 5) + 1}`,

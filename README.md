@@ -21,14 +21,15 @@ LLM Context Tokens cost money. Standard JSON is verbose. ZOON is **optimal**.
 
 ### Key Features
 
-| Feature               | Description                                    |
-| --------------------- | ---------------------------------------------- |
-| **Header Aliasing**   | `%a=long.prefix` reduces nested redundancy     |
-| **Constant Hoisting** | `@field=value` moves repeated values to header |
-| **Auto-Increment**    | `i+` type or `+N` count for implicit rows      |
-| **Boolean Shorthand** | `1`/`0` (tabular) or `y`/`n` (inline)          |
-| **Space Delimiters**  | More token-efficient than commas or pipes      |
-| **Dual Format**       | Tabular (arrays) and Inline (objects)          |
+| Feature               | Description                                                |
+| --------------------- | ---------------------------------------------------------- |
+| **Indexed Enums**     | `field!opt1\|opt2` uses numeric indices for compact output |
+| **Header Aliasing**   | `%a=long.prefix` reduces nested redundancy                 |
+| **Constant Hoisting** | `@field=value` moves repeated values to header             |
+| **Auto-Increment**    | `i+` type or `+N` count for implicit rows                  |
+| **Boolean Shorthand** | `1`/`0` (tabular) or `y`/`n` (inline)                      |
+| **Space Delimiters**  | More token-efficient than commas or pipes                  |
+| **Dual Format**       | Tabular (arrays) and Inline (objects)                      |
 
 ### ZOON vs TOON
 

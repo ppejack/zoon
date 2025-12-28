@@ -70,7 +70,7 @@ fn decode_tabular(input: &str) -> Result<serde_json::Value> {
         let clean_part = if is_const { &part[1..] } else { part };
         
         // Find separator : or =
-        let sep_idx = clean_part.find(|c| c == ':' || c == '=');
+        let sep_idx = clean_part.find(|c| c == ':' || c == '=' || c == '!');
         if sep_idx.is_none() { continue; }
         let idx = sep_idx.unwrap();
         

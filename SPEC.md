@@ -183,6 +183,54 @@ An array MUST use Tabular format when ALL of:
 | `i+` | Auto-Increment | Sequential ID starting at 1, omitted from body          |
 | `a`  | Array          | Encoded as `[val1,val2,...]`                            |
 
+### 4.5 Indexed Enums
+
+When enum values are long or numerous, using numeric indices instead of literal values saves significant tokens.
+
+**Syntax:**
+
+```
+# field!option0|option1|option2
+0
+1
+2
+```
+
+The `!` separator (instead of `=`) indicates that data rows use 0-based indices.
+
+**Example:**
+
+Standard enum (literal values):
+
+```ZOON
+# role=user|assistant
+user
+assistant
+user
+```
+
+Indexed enum (numeric indices):
+
+```ZOON
+# role!user|assistant
+0
+1
+0
+```
+
+**When to Use:**
+
+Encoders SHOULD use indexed mode when:
+
+- The enum has 3+ distinct values, AND
+- `(avg_value_length × row_count) > (options_def_length + row_count × 2)`
+
+**Decoder Rules:**
+
+- When `!` is encountered, parse options as a lookup table
+- Map numeric indices (0, 1, 2...) to option values
+- Invalid indices MUST produce an error
+
 ## 5. Header Aliases
 
 For deeply nested objects, repeated path prefixes can be aliased to reduce tokens.

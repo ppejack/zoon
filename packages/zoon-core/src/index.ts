@@ -4,6 +4,7 @@ export interface ZoonSchemaField {
     name: string;
     type: ZoonSchemaFieldType;
     options?: string[];
+    indexed?: boolean;
 }
 
 export interface ZoonSchema {
@@ -97,7 +98,12 @@ function inferSchema(data: DataRow[], options: EncodeOptions = {}): ZoonSchema {
         if (typeof value === 'string' && inferEnums) {
             const uniqueValues = new Set(data.map((row) => row[key]));
             if (uniqueValues.size <= enumThreshold && uniqueValues.size < data.length * 0.5) {
-                fields.push({ name: key, type: 'e', options: Array.from(uniqueValues).map(String).sort() });
+                const sortedOptions = Array.from(uniqueValues).map(String).sort();
+                const avgLen = sortedOptions.reduce((sum, o) => sum + o.length, 0) / sortedOptions.length;
+                const literalCost = avgLen * data.length;
+                const indexCost = sortedOptions.join('|').length + data.length * 2;
+                const useIndexed = sortedOptions.length >= 3 && literalCost > indexCost;
+                fields.push({ name: key, type: 'e', options: sortedOptions, indexed: useIndexed });
                 continue;
             }
         }
@@ -259,7 +265,8 @@ function encodeWithSchema(data: DataRow[], schema: ZoonSchema): string {
         const safeName = aliasedName.replace(/ /g, '_');
         if (field.type === 'e' && field.options) {
             const safeOptions = field.options.map((o) => o.replace(/ /g, '_'));
-            output += ` ${safeName}=${safeOptions.join('|')}`;
+            const separator = field.indexed ? '!' : '=';
+            output += ` ${safeName}${separator}${safeOptions.join('|')}`;
         } else {
             output += ` ${safeName}:${field.type}`;
         }
@@ -283,7 +290,14 @@ function encodeWithSchema(data: DataRow[], schema: ZoonSchema): string {
                 const val = row[field.name];
                 if (val === null || val === undefined) parts.push('~');
                 else if (field.type === 'b') parts.push(val ? '1' : '0');
-                else if (field.type === 'e' && field.options) parts.push(String(val).replace(/ /g, '_'));
+                else if (field.type === 'e' && field.options) {
+                    if (field.indexed) {
+                        const idx = field.options.indexOf(String(val));
+                        parts.push(idx >= 0 ? String(idx) : String(val).replace(/ /g, '_'));
+                    } else {
+                        parts.push(String(val).replace(/ /g, '_'));
+                    }
+                }
                 else if (field.type === 'a') {
                     const arr = val as unknown[];
                     const encoded = arr.map(item => typeof item === 'string' ? item.replace(/ /g, '_') : String(item)).join(',');
@@ -544,6 +558,7 @@ function decodeTabular(lines: string[], aliases: Map<string, string> = new Map()
         let options: string[] | undefined;
         let isConstant = false;
         let constValue: string | undefined;
+        let indexed = false;
 
         if (part.startsWith('@')) {
             isConstant = true;
@@ -560,6 +575,12 @@ function decodeTabular(lines: string[], aliases: Map<string, string> = new Map()
                 constValue = v;
                 type = 'const'; // Marker
             }
+        } else if (part.includes('!')) {
+            const [n, opts] = part.split('!');
+            name = n!;
+            type = 'e';
+            options = opts!.split('|');
+            indexed = true;
         } else if (part.includes('=')) {
             const [n, opts] = part.split('=');
             name = n!;
@@ -601,7 +622,7 @@ function decodeTabular(lines: string[], aliases: Map<string, string> = new Map()
                 }
             } else {
                 if (options) {
-                    fields.push({ name, type: 'e', options });
+                    fields.push({ name, type: 'e', options, indexed });
                 } else {
                     fields.push({ name, type: type as ZoonSchemaFieldType });
                 }
@@ -677,7 +698,12 @@ function decodeTabular(lines: string[], aliases: Map<string, string> = new Map()
                     } else if (field.type === 'b') {
                         row[field.name] = token === '1';
                     } else if (field.type === 'e' && field.options) {
-                        row[field.name] = token ? token.replace(/_/g, ' ') : '';
+                        if (field.indexed) {
+                            const idx = parseInt(token || '0', 10);
+                            row[field.name] = field.options[idx]?.replace(/_/g, ' ') ?? token;
+                        } else {
+                            row[field.name] = token ? token.replace(/_/g, ' ') : '';
+                        }
                     } else if (field.type === 'a') {
                         const inner = token?.slice(1, -1) || '';
                         row[field.name] = inner ? inner.split(',').map((s) => s.replace(/_/g, ' ')) : [];

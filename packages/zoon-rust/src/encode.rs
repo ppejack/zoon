@@ -242,7 +242,7 @@ fn encode_tabular(arr: &[serde_json::Value]) -> Result<String> {
             skip_indices.insert(i);
         }
         
-        if type_code.starts_with('=') {
+        if type_code.starts_with('=') || type_code.starts_with('!') {
             header_parts.push(format!("{}{}", aliased, type_code));
         } else {
             header_parts.push(format!("{}:{}", aliased, type_code));
@@ -335,6 +335,8 @@ struct ColumnStats {
     values: Vec<String>,
     unique_vals: std::collections::HashSet<String>,
     is_seq: bool,
+    indexed: bool,
+    enum_keys: Vec<String>,
 }
 
 fn infer_type(stat: &ColumnStats, arr_len: usize, key: &str) -> String {
@@ -347,9 +349,7 @@ fn infer_type(stat: &ColumnStats, arr_len: usize, key: &str) -> String {
         return "i".into();
     }
 
-    let all_bools = stat.values.iter().all(|v| v == "0" || v == "1" || v == "~"); // bools serialized as 0/1 for stats check?
-    // Actually serialize_value returns 1/0 for bools.
-    
+    let all_bools = stat.values.iter().all(|v| v == "0" || v == "1" || v == "~");
     if all_bools {
         return "b".into();
     }
@@ -358,9 +358,15 @@ fn infer_type(stat: &ColumnStats, arr_len: usize, key: &str) -> String {
         let mut vals: Vec<_> = stat.unique_vals.iter().filter(|v| *v != "~").cloned().collect();
         vals.sort();
         if !vals.is_empty() {
-             // ensure no pipe/equals in keys?
-             let escaped: Vec<String> = vals.iter().map(|v| v.clone()).collect();
-            return format!("={}", escaped.join("|"));
+            if vals.len() >= 3 {
+                let avg_len: usize = vals.iter().map(|v| v.len()).sum::<usize>() / vals.len();
+                let literal_cost = avg_len * arr_len;
+                let index_cost = vals.join("|").len() + arr_len * 2;
+                if literal_cost > index_cost {
+                    return format!("!{}", vals.join("|"));
+                }
+            }
+            return format!("={}", vals.join("|"));
         }
     }
 

@@ -76,6 +76,27 @@ Bob User 0`}</pre>
     )
   },
   {
+    id: 'indexed-enums',
+    title: '4.5 Indexed Enums',
+    content: (
+      <>
+        <p>When enum values are long or numerous, using numeric indices instead of literal values saves significant tokens.</p>
+        <h4>Syntax</h4>
+        <pre className="code-block">{`# field!option0|option1|option2
+0
+1
+2`}</pre>
+        <p>The <code>!</code> separator (instead of <code>=</code>) indicates that data rows use 0-based numeric indices.</p>
+        <h4>Example</h4>
+        <pre className="code-block">{`# role!user|assistant
+0
+1
+0`}</pre>
+        <p>This encodes <code>["user", "assistant", "user"]</code> using just the indices 0, 1, 0.</p>
+      </>
+    )
+  },
+  {
     id: 'aliases',
     title: '5. Header Aliases',
     content: (
