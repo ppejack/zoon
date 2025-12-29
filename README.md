@@ -1,6 +1,6 @@
 # Zero Overhead Object Notation (ZOON)
 
-![ZOON Version](https://img.shields.io/badge/SPEC-v1.0-blueviolet) ![License](https://img.shields.io/badge/License-MIT-green)
+[![ZOON Version](https://img.shields.io/badge/SPEC-v1.0.3-blueviolet)](./SPEC.md) ![License](https://img.shields.io/badge/License-MIT-green)
 
 **Zero Overhead Object Notation (ZOON)** is a token-optimized data format designed to maximize **LLM Context Window efficiency**. It removes all redundancy from your data, achieving token compression rates superior to JSON, TOON, ZON, and CSV. Written by Carsen Klock.
 
