@@ -178,6 +178,7 @@ An array MUST use Tabular format when ALL of:
 | Code | Type           | Description                                             |
 | ---- | -------------- | ------------------------------------------------------- |
 | `s`  | String         | Text value, spaces replaced with `_`                    |
+| `t`  | Text           | Long text, quoted with `"..."`, preserves spaces        |
 | `i`  | Integer        | Whole number                                            |
 | `b`  | Boolean        | `1` for true, `0` for false                             |
 | `e`  | Enum           | Defined via `name=val1\|val2`, encoded as literal value |

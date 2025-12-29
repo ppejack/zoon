@@ -148,6 +148,7 @@ gateway-2 1837`}</pre>
           </thead>
           <tbody>
             <tr><td>s</td><td>String</td><td>Text value, spaces replaced with _</td></tr>
+            <tr><td>t</td><td>Text</td><td>Long text, quoted with "...", preserves spaces</td></tr>
             <tr><td>i</td><td>Integer</td><td>Whole number</td></tr>
             <tr><td>b</td><td>Boolean</td><td>1/0 (tabular) or y/n (inline)</td></tr>
             <tr><td>e</td><td>Enum</td><td>Defined via name=val1|val2, encoded as literal value</td></tr>

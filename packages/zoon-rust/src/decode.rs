@@ -130,7 +130,7 @@ fn decode_tabular(input: &str) -> Result<serde_json::Value> {
     let mut auto_inc = 0;
 
     // Helper to process row values
-    let mut process_row = |values: Vec<&str>| -> Result<serde_json::Value> {
+    let mut process_row = |values: Vec<String>| -> Result<serde_json::Value> {
         let mut flat_obj = serde_json::Map::new();
         
         // Apply constants
@@ -149,7 +149,7 @@ fn decode_tabular(input: &str) -> Result<serde_json::Value> {
                  if val_idx >= values.len() {
                      "~".to_string()
                  } else {
-                     let v = values[val_idx].to_string();
+                     let v = values[val_idx].clone();
                      val_idx += 1;
                      v
                  }
@@ -175,11 +175,57 @@ fn decode_tabular(input: &str) -> Result<serde_json::Value> {
         let line = line.trim();
         if line.is_empty() { continue; }
         
-        let values: Vec<&str> = line.split_whitespace().collect();
+        let values = tokenize_row(line);
         result.push(process_row(values)?);
     }
 
     Ok(serde_json::Value::Array(result))
+}
+
+fn tokenize_row(line: &str) -> Vec<String> {
+    let mut tokens = Vec::new();
+    let chars: Vec<char> = line.chars().collect();
+    let mut i = 0;
+    while i < chars.len() {
+        while i < chars.len() && chars[i] == ' ' {
+            i += 1;
+        }
+        if i >= chars.len() {
+            break;
+        }
+        if chars[i] == '"' {
+            let mut end = i + 1;
+            while end < chars.len() {
+                if chars[end] == '\\' && end + 1 < chars.len() {
+                    end += 2;
+                } else if chars[end] == '"' {
+                    end += 1;
+                    break;
+                } else {
+                    end += 1;
+                }
+            }
+            let content: String = chars[i+1..end-1].iter().collect();
+            tokens.push(content);
+            i = end;
+        } else if chars[i] == '[' {
+            let mut end = i + 1;
+            while end < chars.len() && chars[end] != ']' {
+                end += 1;
+            }
+            let content: String = chars[i..end+1].iter().collect();
+            tokens.push(content);
+            i = end + 1;
+        } else {
+            let start = i;
+            while i < chars.len() && chars[i] != ' ' {
+                i += 1;
+            }
+            let content: String = chars[start..i].iter().collect();
+            tokens.push(content);
+        }
+    }
+    tokens
 }
 
 fn unflatten_object(flat: serde_json::Map<String, serde_json::Value>) -> Result<serde_json::Value> {

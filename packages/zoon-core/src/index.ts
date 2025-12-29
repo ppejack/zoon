@@ -109,7 +109,12 @@ function inferSchema(data: DataRow[], options: EncodeOptions = {}): ZoonSchema {
         }
 
         if (typeof value === 'string') {
-            fields.push({ name: key, type: 's' });
+            const avgLen = data.reduce((sum, row) => sum + String(row[key] ?? '').length, 0) / data.length;
+            if (avgLen > 30) {
+                fields.push({ name: key, type: 't' });
+            } else {
+                fields.push({ name: key, type: 's' });
+            }
             continue;
         }
 
@@ -302,6 +307,10 @@ function encodeWithSchema(data: DataRow[], schema: ZoonSchema): string {
                     const arr = val as unknown[];
                     const encoded = arr.map(item => typeof item === 'string' ? item.replace(/ /g, '_') : String(item)).join(',');
                     parts.push(`[${encoded}]`);
+                }
+                else if (field.type === 't') {
+                    const str = String(val).replace(/"/g, '\\"');
+                    parts.push(`"${str}"`);
                 }
                 else parts.push(String(val).replace(/ /g, '_'));
             }
@@ -531,6 +540,42 @@ function parseInlineObject(input: string): DataRow {
     return result;
 }
 
+function tokenizeRow(line: string): string[] {
+    const tokens: string[] = [];
+    let i = 0;
+    while (i < line.length) {
+        while (i < line.length && line[i] === ' ') i++;
+        if (i >= line.length) break;
+
+        if (line[i] === '"') {
+            let end = i + 1;
+            while (end < line.length) {
+                if (line[end] === '\\' && end + 1 < line.length) {
+                    end += 2;
+                } else if (line[end] === '"') {
+                    end++;
+                    break;
+                } else {
+                    end++;
+                }
+            }
+            tokens.push(line.slice(i + 1, end - 1));
+            i = end;
+        } else if (line[i] === '[') {
+            let end = i + 1;
+            while (end < line.length && line[end] !== ']') end++;
+            tokens.push(line.slice(i, end + 1));
+            i = end + 1;
+        } else {
+            let end = i;
+            while (end < line.length && line[end] !== ' ') end++;
+            tokens.push(line.slice(i, end));
+            i = end;
+        }
+    }
+    return tokens;
+}
+
 function decodeTabular(lines: string[], aliases: Map<string, string> = new Map()): DataRow[] {
     const headerLine = lines[0];
     if (!headerLine) throw new Error('Invalid ZEN Header');
@@ -674,7 +719,7 @@ function decodeTabular(lines: string[], aliases: Map<string, string> = new Map()
             const line = lineRaw.trim();
             if (!line) continue;
 
-            const tokens = line.split(' ');
+            const tokens = tokenizeRow(line);
             const row: DataRow = {};
             let tokenIdx = 0;
 
@@ -707,6 +752,8 @@ function decodeTabular(lines: string[], aliases: Map<string, string> = new Map()
                     } else if (field.type === 'a') {
                         const inner = token?.slice(1, -1) || '';
                         row[field.name] = inner ? inner.split(',').map((s) => s.replace(/_/g, ' ')) : [];
+                    } else if (field.type === 't') {
+                        row[field.name] = token ? token.replace(/\\"/g, '"') : '';
                     } else {
                         row[field.name] = token ? token.replace(/_/g, ' ') : '';
                     }

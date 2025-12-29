@@ -288,6 +288,10 @@ fn encode_tabular(arr: &[serde_json::Value]) -> Result<String> {
             if type_code == "b" {
                  if s == "true" { s = "1".into(); }
                  else if s == "false" { s = "0".into(); }
+            } else if type_code == "t" {
+                if let serde_json::Value::String(raw) = val {
+                    s = format!("\"{}\"", raw.replace('"', "\\\""));
+                }
             }
             out_row.push(s);
         }
@@ -337,6 +341,7 @@ struct ColumnStats {
     is_seq: bool,
     indexed: bool,
     enum_keys: Vec<String>,
+    is_text: bool,
 }
 
 fn infer_type(stat: &ColumnStats, arr_len: usize, key: &str) -> String {
@@ -368,6 +373,11 @@ fn infer_type(stat: &ColumnStats, arr_len: usize, key: &str) -> String {
             }
             return format!("={}", vals.join("|"));
         }
+    }
+
+    let total_len: usize = stat.values.iter().map(|v| v.len()).sum();
+    if !stat.values.is_empty() && total_len / stat.values.len() > 30 {
+        return "t".into();
     }
 
     "s".into()

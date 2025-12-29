@@ -100,7 +100,7 @@ checksum = "e6d6085d62852e35540689d1f97ad663e3971fc19cf5eceab364d62c646ea167"
 
 [[package]]
 name = "zoon-format"
-version = "1.0.2"
+version = "1.0.3"
 dependencies = [
  "serde",
  "serde_json",
