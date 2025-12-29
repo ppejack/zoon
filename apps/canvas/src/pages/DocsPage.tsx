@@ -827,7 +827,7 @@ function ComparisonSection() {
       <div className="docs-table">
         <table>
           <thead>
-            <tr><th>Format</th><th>Tokens (GPT-4o)</th><th>Savings vs JSON</th></tr>
+            <tr><th>Format</th><th>Tokens (GPT-5)</th><th>Savings vs JSON</th></tr>
           </thead>
           <tbody>
             <tr className="docs-row-winner"><td><strong>ZOON</strong></td><td><strong>6,274</strong></td><td><strong>-60.0%</strong></td></tr>

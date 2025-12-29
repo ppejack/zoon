@@ -19,7 +19,7 @@ export function PlaygroundPage() {
   };
 
   const tokenizer = useMemo(() => {
-    try { return encodingForModel('gpt-4o'); } catch { return null; }
+    try { return encodingForModel('gpt-5'); } catch { return null; }
   }, []);
 
   useEffect(() => {
