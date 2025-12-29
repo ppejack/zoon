@@ -11,16 +11,7 @@ export default function App() {
     <div className="app-container">
       <nav className="nav">
         <div className="brand">
-          <Link to="/" className="flex items-center gap-2 text-inherit no-underline">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="url(#paint0_linear)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <defs>
-              <linearGradient id="paint0_linear" x1="12" y1="2" x2="12" y2="22" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#A855F7"/>
-                <stop offset="1" stopColor="#06B6D4"/>
-              </linearGradient>
-            </defs>
-          </svg>
+          <Link to="/" className="flex items-center gap-2 text-inherit no-underline">          
           ZOON
           </Link>
         </div>

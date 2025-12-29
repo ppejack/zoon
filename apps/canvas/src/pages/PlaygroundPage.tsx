@@ -129,7 +129,7 @@ export function PlaygroundPage() {
           {[
             { name: 'JSON', tokens: stats.json, color: '#64748b' },
             { name: 'TOON', tokens: stats.toon, color: '#f59e0b' },
-            { name: 'ZON', tokens: stats.zon, color: '#06b6d4' },
+            // { name: 'ZON', tokens: stats.zon, color: '#06b6d4' },
             { name: 'ZOON', tokens: stats.zoon, color: '#a855f7' }
           ].map(f => {
             const hasTokens = f.tokens > 0;
@@ -139,7 +139,7 @@ export function PlaygroundPage() {
             return (
               <div key={f.name} className="glass-panel" style={{ padding: '1.5rem', border: isWinner ? '1px solid rgba(168, 85, 247, 0.4)' : undefined, opacity: hasTokens ? 1 : 0.5 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '13px', fontWeight: 600 }}>
-                  <span style={{ color: f.color }}>{f.name} {isWinner && '👑'}</span>
+                  <span style={{ color: f.color }}>{f.name} {isWinner && '⭐'}</span>
                   <span>{hasTokens ? `${f.tokens} tok` : 'N/A'} {savingsVsJson > 0 && <span style={{ color: 'var(--accent)', marginLeft: '0.5rem' }}>-{savingsVsJson}%</span>}</span>
                 </div>
                 <div style={{ height: '8px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', overflow: 'hidden' }}>
@@ -163,45 +163,50 @@ export function PlaygroundPage() {
             <span style={{ marginRight: '0.5rem' }}>📦</span> The ZOON Ecosystem
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <div className="ecosystem-item" style={{ padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <a href="https://npmjs.com/package/@zoon-format/zoon" target="_blank" rel="noopener noreferrer" className="ecosystem-item" style={{ padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', textDecoration: 'none', display: 'block', transition: 'all 0.2s', cursor: 'pointer' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
                 <strong style={{ color: '#a855f7' }}>@zoon-format/zoon</strong>
                 <span className="token-pill">TS / JS</span>
               </div>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', margin: 0 }}>Core parser and stringifier. Zero dependencies, browser compatible.</p>
-            </div>
+              <span style={{ fontSize: '0.75rem', color: 'var(--accent)', marginTop: '0.5rem', display: 'inline-block' }}>npmjs.com →</span>
+            </a>
             
-            <div className="ecosystem-item" style={{ padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <a href="https://pypi.org/project/zoon-format/" target="_blank" rel="noopener noreferrer" className="ecosystem-item" style={{ padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', textDecoration: 'none', display: 'block', transition: 'all 0.2s', cursor: 'pointer' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
                 <strong style={{ color: '#3b82f6' }}>zoon-format</strong>
                 <span className="token-pill">Python</span>
               </div>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', margin: 0 }}>High-speed Python bindings. Native extension for max performance.</p>
-            </div>
+              <span style={{ fontSize: '0.75rem', color: '#3b82f6', marginTop: '0.5rem', display: 'inline-block' }}>pypi.org →</span>
+            </a>
 
-            <div className="ecosystem-item" style={{ padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <a href="https://npmjs.com/package/@zoon-format/cli" target="_blank" rel="noopener noreferrer" className="ecosystem-item" style={{ padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', textDecoration: 'none', display: 'block', transition: 'all 0.2s', cursor: 'pointer' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
                 <strong style={{ color: '#f59e0b' }}>@zoon-format/cli</strong>
                 <span className="token-pill">CLI</span>
               </div>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', margin: 0 }}>Command line tools for piping and file conversion.</p>
-            </div>
+              <span style={{ fontSize: '0.75rem', color: '#f59e0b', marginTop: '0.5rem', display: 'inline-block' }}>npmjs.com →</span>
+            </a>
 
-            <div className="ecosystem-item" style={{ padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <a href="https://github.com/zoon-format/zoon-go" target="_blank" rel="noopener noreferrer" className="ecosystem-item" style={{ padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', textDecoration: 'none', display: 'block', transition: 'all 0.2s', cursor: 'pointer' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
                 <strong style={{ color: '#00ADD8' }}>zoon-go</strong>
                 <span className="token-pill">Go</span>
               </div>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', margin: 0 }}>Native Go module with Marshal/Unmarshal API. Go 1.24.0+.</p>
-            </div>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', margin: 0 }}>Native Go module with Marshal/Unmarshal API. Go 1.24+.</p>
+              <span style={{ fontSize: '0.75rem', color: '#00ADD8', marginTop: '0.5rem', display: 'inline-block' }}>github.com →</span>
+            </a>
 
-            <div className="ecosystem-item" style={{ padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <a href="https://crates.io/crates/zoon-format" target="_blank" rel="noopener noreferrer" className="ecosystem-item" style={{ padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', textDecoration: 'none', display: 'block', transition: 'all 0.2s', cursor: 'pointer' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
                 <strong style={{ color: '#DEA584' }}>zoon-format</strong>
                 <span className="token-pill">Rust</span>
               </div>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', margin: 0 }}>Rust crate with serde integration. encode/decode API.</p>
-            </div>
+              <span style={{ fontSize: '0.75rem', color: '#DEA584', marginTop: '0.5rem', display: 'inline-block' }}>crates.io →</span>
+            </a>
           </div>
         </div>
         

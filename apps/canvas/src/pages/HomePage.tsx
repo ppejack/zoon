@@ -11,7 +11,7 @@ const BENCHMARKS = [
 const STATS = [
   { label: 'Token Reduction', value: 'Up to 60%', icon: '📉' },
   { label: 'vs TOON', value: '+17.2%', icon: '⚡' },
-  { label: 'vs ZON', value: '+10.1%', icon: '🎯' },
+  // { label: 'vs ZON', value: '+10.1%', icon: '🎯' },
   { label: 'Data Fidelity', value: '100%', icon: '💎' },
 ];
 
@@ -64,7 +64,7 @@ export function HomePage() {
 
   return (
     <main>
-      <section className="hero">
+      <section className="hero" style={{ paddingBottom: '0' }}>
         <div className="hero-glow"></div>
         <div className="badge animate-pulse" style={{ display: 'inline-flex', gap: '0.5rem', alignItems: 'center' }}>
           <span style={{ fontSize: '0.9rem' }}>⚡</span>
@@ -82,14 +82,24 @@ export function HomePage() {
         <p className="subheadline animate-fade-in">
           The most token-efficient data format for large language models.
           ZOON delivers <strong>up to {animatedSavings}% reduction</strong> while maintaining perfect accuracy.
+          Open source and production-ready across TypeScript, Python, Go, and Rust.
         </p>
         <div className="cta-group animate-fade-in">
           <button className="btn btn-primary" onClick={() => navigate('/playground')}>
-            🚀 Try Playground
+            🚀 Try ZOON
           </button>
           <button className="btn btn-secondary" onClick={() => navigate('/spec')}>
             📄 Read Specification
           </button>
+          <a 
+            href="https://github.com/zoon-format/zoon" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="btn btn-secondary"
+            style={{ textDecoration: 'none' }}
+          >
+            ⭐ GitHub
+          </a>
         </div>
 
         <div className="stats-row animate-slide-up">
@@ -104,6 +114,80 @@ export function HomePage() {
       </section>
 
       <section className="section">
+
+      <div className="glass-panel" style={{ padding: '2.5rem', marginTop: '4rem', textAlign: 'center' }}>
+          <h2 className="section-title" style={{ marginBottom: '1.5rem' }}>What is ZOON?</h2>
+          <p style={{ maxWidth: '800px', margin: '0 auto 2rem', color: 'var(--text-dim)', lineHeight: '1.8', fontSize: '1.05rem' }}>
+            <strong style={{ color: 'var(--text)' }}>Zero Overhead Object Notation (ZOON)</strong> is a compact text format designed specifically for LLM context windows.
+            Unlike JSON, which wastes tokens on repeated keys, quotes, and verbose syntax, ZOON uses a header-based schema with smart optimizations 
+            like <strong>auto-increment IDs</strong>, <strong>enum indexing</strong>, and <strong>constant hoisting</strong> to achieve 
+            maximum compression while remaining human-readable and fully lossless.
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', maxWidth: '900px', margin: '0 auto' }}>
+            <div style={{ textAlign: 'left', padding: '1rem', background: 'rgba(168, 85, 247, 0.05)', borderRadius: '8px' }}>
+              <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🎯</div>
+              <strong style={{ color: 'var(--accent)' }}>Purpose-Built</strong>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', marginTop: '0.5rem' }}>
+                Optimized for BPE tokenizers used by GPT, Claude, Gemini, and other LLMs.
+              </p>
+            </div>
+            <div style={{ textAlign: 'left', padding: '1rem', background: 'rgba(168, 85, 247, 0.05)', borderRadius: '8px' }}>
+              <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🔄</div>
+              <strong style={{ color: 'var(--accent)' }}>Lossless</strong>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', marginTop: '0.5rem' }}>
+                100% round-trip fidelity. Every JSON document encodes and decodes exactly.
+              </p>
+            </div>
+            <div style={{ textAlign: 'left', padding: '1rem', background: 'rgba(168, 85, 247, 0.05)', borderRadius: '8px' }}>
+              <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>📖</div>
+              <strong style={{ color: 'var(--accent)' }}>Readable</strong>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', marginTop: '0.5rem' }}>
+                Human-readable format. LLMs can understand and generate ZOON natively.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="install-section">
+          <div className="install-block">
+            <div className="install-header">
+              <h3>JavaScript / TypeScript</h3>
+              <div className="pm-tabs">
+                {(['npm', 'bun', 'yarn'] as JsPm[]).map(pm => (
+                  <button 
+                    key={pm} 
+                    className={`pm-tab ${jsPm === pm ? 'active' : ''}`}
+                    onClick={() => setJsPm(pm)}
+                  >
+                    {pm}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="install-cmd" onClick={() => handleCopy(JS_COMMANDS[jsPm], 'js')}>
+              {JS_COMMANDS[jsPm]} <span>{copied === 'js' ? '✅' : '📋'}</span>
+            </div>
+          </div>
+          <div className="install-block">
+            <div className="install-header">
+              <h3>Python</h3>
+              <div className="pm-tabs">
+                {(['pip', 'uv'] as PyPm[]).map(pm => (
+                  <button 
+                    key={pm} 
+                    className={`pm-tab ${pyPm === pm ? 'active' : ''}`}
+                    onClick={() => setPyPm(pm)}
+                  >
+                    {pm}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="install-cmd" onClick={() => handleCopy(PY_COMMANDS[pyPm], 'py')}>
+              {PY_COMMANDS[pyPm]} <span>{copied === 'py' ? '✅' : '📋'}</span>
+            </div>
+          </div>
+        </div>
         <div className="glass-panel" style={{ padding: '2.5rem', marginBottom: '2rem' }}>
           <h2 className="section-title" style={{ fontSize: '1.5rem', textAlign: 'center', marginBottom: '2rem' }}>
             See the Difference
@@ -230,47 +314,6 @@ Carol user`}
               Switches intelligently between tabular format for arrays and inline format for 
               objects, covering 100% of JSON use cases.
             </p>
-          </div>
-        </div>
-
-        <div className="install-section">
-          <div className="install-block">
-            <div className="install-header">
-              <h3>JavaScript / TypeScript</h3>
-              <div className="pm-tabs">
-                {(['npm', 'bun', 'yarn'] as JsPm[]).map(pm => (
-                  <button 
-                    key={pm} 
-                    className={`pm-tab ${jsPm === pm ? 'active' : ''}`}
-                    onClick={() => setJsPm(pm)}
-                  >
-                    {pm}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="install-cmd" onClick={() => handleCopy(JS_COMMANDS[jsPm], 'js')}>
-              {JS_COMMANDS[jsPm]} <span>{copied === 'js' ? '✅' : '📋'}</span>
-            </div>
-          </div>
-          <div className="install-block">
-            <div className="install-header">
-              <h3>Python</h3>
-              <div className="pm-tabs">
-                {(['pip', 'uv'] as PyPm[]).map(pm => (
-                  <button 
-                    key={pm} 
-                    className={`pm-tab ${pyPm === pm ? 'active' : ''}`}
-                    onClick={() => setPyPm(pm)}
-                  >
-                    {pm}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="install-cmd" onClick={() => handleCopy(PY_COMMANDS[pyPm], 'py')}>
-              {PY_COMMANDS[pyPm]} <span>{copied === 'py' ? '✅' : '📋'}</span>
-            </div>
           </div>
         </div>
       </section>
